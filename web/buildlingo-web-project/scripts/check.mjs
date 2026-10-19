@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+const root=path.resolve(import.meta.dirname,'..');
+const read=name=>fs.readFileSync(path.join(root,'dist',name),'utf8');
+const sandbox={window:{}};
+for(const f of ['vocabulary.js','house.js'])vm.runInNewContext(read(f),sandbox,{filename:f});
+new vm.Script(read('app.js'),{filename:'app.js'});
+const {words,categories}=sandbox.window.BUILDING_DATA;
+const house=sandbox.window.BUILDING_HOUSE;
+assert.equal(words.length,350);
+assert.equal(categories.length,16);
+assert.equal(new Set(words.map(w=>w.id)).size,words.length,'Vocabulary IDs must be unique');
+for(const w of words){for(const field of ['id','term','ipa','definition','example','category'])assert.equal(typeof w[field],'string',`${w.id}: missing ${field}`);assert(categories.some(c=>c.id===w.category),`${w.id}: invalid category`);assert(w.definition.endsWith('.'),`${w.id}: incomplete definition`);}
+for(const p of house.pins)assert(words.some(w=>w.id===p.id),`Unknown house marker: ${p.id}`);
+const references=Array.from(house.svg.matchAll(/data-word="([^"]+)"/g),m=>m[1]);
+assert.equal(references.length,95);
+for(const id of references)assert(words.some(w=>w.id===id),`Unknown clickable object: ${id}`);
+const html=read('index.html');
+const ids=Array.from(html.matchAll(/\bid="([^"]+)"/g),m=>m[1]);
+assert.equal(new Set(ids).size,ids.length,'Duplicate HTML IDs');
+for(const src of Array.from(html.matchAll(/(?:src|href)="([^"#]+\.(?:js|css|svg))"/g),m=>m[1]))assert(fs.existsSync(path.join(root,'dist',src)),`Missing asset: ${src}`);
+assert(html.includes('lang="en"'));
+console.log(`Validated ${words.length} vocabulary records, ${categories.length} categories, ${references.length} clickable objects, ${house.pins.length} markers, local assets, JavaScript syntax.`);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#253e35">
+<meta name="description" content="Step inside an interactive house. Learn construction, architecture, plumbing, electrical, and home vocabulary through English definitions, spoken examples, flashcards, and quizzes.">
+<title>Buildlingo — A house full of words</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script defer src="vocabulary.js"></script><script defer src="house.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to learning content</a>
+<aside class="sidebar" id="sidebar">
+<a href="#explore" class="brand" aria-label="Buildlingo home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 14 16 5l11 9v13H5Z"/><path d="M13 27V16h7v11M9 12h14"/></svg></span>buildlingo<span class="brand-dot">.</span></a>
+<p class="sidebar-caption">BUILD YOUR ENGLISH</p>
+<nav aria-label="Main navigation">
+<button class="nav-item active" data-view="explore"><i data-icon="house"></i>Explore the house</button>
+<button class="nav-item" data-view="library"><i data-icon="book"></i>Vocabulary library<span class="nav-count" id="navCount"></span></button>
+<button class="nav-item" data-view="practice"><i data-icon="spark"></i>Practice studio</button>
+<button class="nav-item" data-view="collection"><i data-icon="bookmark"></i>My collection<span class="nav-count" id="savedCount">0</span></button>
+</nav>
+<div class="sidebar-course"><span class="tiny-label">YOUR LEARNING JOURNEY</span><div class="course-illustration" aria-hidden="true"><svg viewBox="0 0 170 100"><path d="M29 78h112M39 78V44l44-29 43 29v34"/><path d="m30 44 53-36 53 36M65 78V51h34v27M46 49h12v15H46ZM109 49h10v15h-10M77 29h13v12H77"/></svg><span>one word at a time</span></div><div class="progress-label"><strong id="learnedCount">0 words learned</strong><span id="learnedPercent">0%</span></div><div class="progress-track"><span id="learnedBar"></span></div><p>A little practice. A stronger foundation.</p><button class="text-button" id="progressButton">See my progress <span>↗</span></button></div>
+<div class="sidebar-bottom"><span class="avatar">J</span><div><strong>Your personal workshop</strong><small>Progress saved on this device</small></div><button class="icon-button" id="helpButton" aria-label="How to use Buildlingo"><i data-icon="help"></i></button></div>
+</aside>
+<div class="workspace">
+<header class="topbar"><button class="icon-button mobile-menu" id="menuButton" aria-label="Toggle navigation" aria-expanded="false"><i data-icon="menu"></i></button><span class="breadcrumb">THE ENGLISH WORKSHOP <span>/</span> <strong id="breadcrumb">Explore</strong></span><div class="topbar-actions"><div class="global-search"><i data-icon="search"></i><input id="globalSearch" placeholder="Find a word…" aria-label="Search all vocabulary" autocomplete="off"><kbd>/</kbd><div class="search-popover" id="searchPopover" hidden></div></div><label class="accent-select"><i data-icon="volume"></i><span class="sr-only">Audio accent</span><select id="accentSelect"><option value="en-US">US English</option><option value="en-GB">UK English</option></select></label></div></header>
+<main id="main" tabindex="-1">
+<section id="exploreView" class="page-view">
+<div class="page-heading"><div><p class="eyebrow"><span></span> A NEW WAY TO LEARN</p><h1>A house full of <em>words.</em></h1><p class="page-description">Step inside. Tap an object. Build your English.</p></div><div class="heading-note"><span class="note-icon"><i data-icon="headphones"></i></span><div><strong>See it. Hear it. Remember it.</strong><span><b id="heroCount"></b> words. One place to explore.</span></div></div></div>
+<div class="explore-layout">
+<div class="house-column"><div class="scene-toolbar"><div class="scene-tabs" aria-label="House layers"><button data-layer="all" class="active">Whole house</button><button data-layer="structure">Structure</button><button data-layer="plumbing">Plumbing</button><button data-layer="electrical">Electrical</button><button data-layer="exterior">Outside</button></div></div>
+<section class="house-card" aria-label="Interactive vocabulary house"><div class="house-card-heading"><div><span class="live-dot"></span><strong>The Vocabulary House</strong><span class="scene-subtitle">An interactive cross-section</span></div><button class="label-toggle" id="labelsButton" aria-pressed="false"><i data-icon="tag"></i>Labels <span class="toggle"></span></button></div><div class="house-canvas" id="houseCanvas"></div><div class="house-tooltip" id="houseTooltip" hidden></div><div class="house-card-footer"><span><i data-icon="cursor"></i>Click an object or a marker to discover its name</span><button id="tourButton" class="text-button">Take a guided tour <i data-icon="arrow"></i></button></div></section>
+<div class="below-house"><div class="room-picker" aria-label="Explore rooms"><span class="tiny-label">STEP INTO A ROOM</span><div id="roomButtons"></div></div><div class="explore-tip"><span class="tip-icon"><i data-icon="bulb"></i></span><p><strong>Little details. Big vocabulary.</strong><br>Try the parts of a window, the roof, or the pipes under the sink.</p><button class="icon-button" id="randomButton" aria-label="Discover a random word"><i data-icon="shuffle"></i></button></div></div>
+</div><aside class="word-panel" id="wordPanel" aria-label="Selected vocabulary word"></aside>
+</div>
+<div class="section-heading"><div><p class="eyebrow">GO BEYOND THE HOUSE</p><h2>Every trade has a language.</h2></div><button class="text-button" id="browseAllButton">Browse all vocabulary <i data-icon="arrow"></i></button></div><div class="category-grid" id="categoryGrid"></div>
+</section>
+<section id="libraryView" class="page-view" hidden><div class="page-heading"><div><p class="eyebrow">YOUR FIELD GUIDE</p><h1>The vocabulary <em>library.</em></h1><p class="page-description">From the foundations to the finishing touches. Every word has a story.</p></div><div class="stat-badge"><strong id="libraryTotal"></strong><span>words to build on</span></div></div><div class="library-toolbar"><label class="library-search"><i data-icon="search"></i><input id="librarySearch" placeholder="Search words, meanings, or examples…" aria-label="Search vocabulary library"></label><label class="select-label">Sort by <select id="sortSelect"><option value="az">A → Z</option><option value="category">Category</option><option value="unlearned">Not yet learned</option></select></label></div><div class="filter-chips" id="libraryCategories"></div><div class="results-heading"><span id="resultCount"></span><label class="checkbox-label"><input type="checkbox" id="unlearnedOnly">Only words to learn</label></div><div class="vocab-grid" id="vocabGrid"></div><div id="pagination" class="pagination"></div></section>
+<section id="practiceView" class="page-view" hidden><div class="page-heading"><div><p class="eyebrow">MAKE IT STICK</p><h1>A little practice.<br>A stronger <em>foundation.</em></h1><p class="page-description">Turn the words you discover into words you remember.</p></div></div><div id="practiceContent"></div></section>
+<section id="collectionView" class="page-view" hidden><div class="page-heading"><div><p class="eyebrow">YOUR PERSONAL TOOLBOX</p><h1>Words worth <em>keeping.</em></h1><p class="page-description">Save useful words, revisit discoveries, and watch your vocabulary grow.</p></div><button class="secondary-button" id="exportButton"><i data-icon="download"></i>Export progress</button></div><div class="collection-stats" id="collectionStats"></div><div class="collection-tabs"><button class="active" data-collection="saved">Saved words</button><button data-collection="learned">Learned words</button><button data-collection="seen">Recently explored</button></div><div class="vocab-grid" id="collectionGrid"></div></section>
+<footer class="page-footer"><span><strong>buildlingo.</strong> Learn the world around you.</span><span>English definitions · Real examples · Spoken pronunciation</span></footer>
+</main>
+</div>
+<dialog id="wordDialog" class="word-dialog"><button class="dialog-close icon-button" data-close="wordDialog" aria-label="Close word details"><i data-icon="close"></i></button><div id="dialogWord"></div></dialog>
+<dialog id="helpDialog" class="help-dialog"><button class="dialog-close icon-button" data-close="helpDialog" aria-label="Close help"><i data-icon="close"></i></button><p class="eyebrow">WELCOME TO YOUR WORKSHOP</p><h2>Start with a little curiosity.</h2><div class="help-steps"><p><b>01 · Explore</b>Click an object in the house, or choose a room to discover its vocabulary.</p><p><b>02 · Listen</b>Hear the word, slow it down, or listen to a complete example. Choose US or UK English in the top bar.</p><p><b>03 · Keep it</b>Save a word to your collection. Mark it learned when you feel confident.</p><p><b>04 · Practice</b>Use flashcards, meaning quizzes, and listening challenges. Filter by a trade or practice your saved words.</p></div><div class="help-note">Audio uses the English voices available on your browser and device. A preferred accent is used when installed. The pronunciation guide shows a common US pronunciation. Progress stays in this browser; export a backup from My collection.</div><button class="primary-button" data-close="helpDialog">Let’s explore <i data-icon="arrow"></i></button></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div><div class="sr-only" id="announcement" aria-live="polite"></div>
+</body></html>
